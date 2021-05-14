@@ -1,6 +1,6 @@
 # Linguin AI Ruby wrapper
 
-[![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard) ![build](https://github.com/LinguinAI/linguin-ruby/actions/workflows/main.yml/badge.svg)
+[![Gem Version](https://badge.fury.io/rb/linguin.svg)](https://badge.fury.io/rb/linguin) ![build](https://github.com/LinguinAI/linguin-ruby/actions/workflows/main.yml/badge.svg) [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
 
 This is a Ruby wrapper for the [Linguin AI](https://linguin.ai) API (see [API docs](https://linguin.ai/api-docs/v1)) providing Language Detection as a Service.
 
