@@ -14,7 +14,7 @@ class LinguinLanguagesTest < Minitest::Test
   end
 
   def test_that_languages_works
-    stub_with_json({ en: ["English", "English"], de: ["German", "Deutsch"], ar: ["Arabic", "العربية"] })
+    stub_with_json({ en: %w[English English], de: %w[German Deutsch], ar: %w[Arabic العربية] })
     client = Linguin::Client.new("abc")
     response = client.languages
     assert_equal "English", response[:en][0]
