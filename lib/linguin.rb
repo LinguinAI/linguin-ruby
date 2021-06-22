@@ -7,6 +7,7 @@ require_relative "linguin/base_response"
 require_relative "linguin/detection"
 require_relative "linguin/bulk_detection"
 require_relative "linguin/status"
+require_relative "linguin/languages"
 
 # == Linguin API wrapper module
 # Can be used as a singleton to access all API methods.
@@ -42,6 +43,10 @@ module Linguin
 
     def status
       default_client.status
+    end
+
+    def languages
+      default_client.languages
     end
 
     private
