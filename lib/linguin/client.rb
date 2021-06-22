@@ -63,8 +63,7 @@ module Linguin
     end
 
     def languages
-      ensure_api_key!
-      httparty_response = self.class.get("/languages", headers: headers)
+      httparty_response = self.class.get("/languages")
       Languages.from_httparty(response: httparty_response)
     end
 

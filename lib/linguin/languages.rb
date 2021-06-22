@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 module Linguin
-  # == Linguin::Status
-  # Returned by Linguin#status.
-  #
-  # [:+detections_today+:] how many detections you performed today
-  # [:+daily_limit+:] your daily detection limit (or false)
-  # [:+remaining_today+:] detections remaining today (can be Float::INFINITY)
+  # == Linguin::Languages
+  # Returns a hash of supported languages.
   class Languages < BaseResponse
     class << self
       def error(code, message)

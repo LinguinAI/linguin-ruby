@@ -27,6 +27,9 @@ require_relative "linguin/languages"
 # * number of requests today
 # * daily detection limit of your account (false for unlimited)
 # * remaining detections today (can be Infinity)
+#
+# = Linguin.languages
+# Returns the list of supported languages.
 module Linguin
   class << self
     def api_key=(api_key)
