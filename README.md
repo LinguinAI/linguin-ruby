@@ -81,6 +81,15 @@ status.daily_limit      # => 50_000 or nil for no limit
 status.remaining_today  # => 45_500 or Float::INFINITY for unlimited
 ```
 
+### Language list
+
+You can fetch the list of supported languages:
+
+```ruby
+languages = Linguin.languages
+# => { de: ["German", "Deutsch"], ... }
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

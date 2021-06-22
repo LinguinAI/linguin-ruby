@@ -19,10 +19,12 @@ class LinguinTest < Minitest::Test
     client.expect :detect, true, ["test"]
     client.expect :detect!, true, ["test"]
     client.expect :status, true
+    client.expect :languages, true
     Linguin.stub :default_client, client do
       assert Linguin.detect("test")
       assert Linguin.detect!("test")
       assert Linguin.status
+      assert Linguin.languages
     end
     client.verify
   end
