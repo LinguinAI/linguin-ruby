@@ -46,11 +46,11 @@ module Linguin
       default_client.detect_language!(text)
     end
 
-    def detect_profanity(text, lang=nil)
+    def detect_profanity(text, lang = nil)
       default_client.detect_profanity(text, lang)
     end
 
-    def detect_profanity!(text, lang=nil)
+    def detect_profanity!(text, lang = nil)
       default_client.detect_profanity!(text, lang)
     end
 

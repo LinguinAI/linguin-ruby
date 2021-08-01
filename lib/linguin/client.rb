@@ -33,7 +33,10 @@ module Linguin
 
       text = sanitize(text)
 
-      return LanguageDetection.error(400, "The language of an empty text is more of a philosophical question.") if text.empty?
+      if text.empty?
+        return LanguageDetection.error(400,
+                                       "The language of an empty text is more of a philosophical question.")
+      end
 
       httparty_response = self.class.post("/detect/language", headers: headers, body: { q: text })
       LanguageDetection.from_httparty(response: httparty_response)
@@ -43,7 +46,7 @@ module Linguin
       detect_language(text).raise_on_error!
     end
 
-    def detect_profanity(text, lang=nil)
+    def detect_profanity(text, _lang = nil)
       ensure_api_key!
 
       return bulk_detect_profanity(text) if text.is_a?(Array)
@@ -56,7 +59,7 @@ module Linguin
       ProfanityDetection.from_httparty(response: httparty_response)
     end
 
-    def detect_profanity!(text, lang=nil)
+    def detect_profanity!(text, _lang = nil)
       detect_profanity(text).raise_on_error!
     end
 
@@ -83,7 +86,7 @@ module Linguin
     end
 
     def bulk_detect_profanity(texts)
-      texts.map! {|text| text.to_s.strip }
+      texts.map! { |text| text.to_s.strip }
 
       return BulkProfanityDetection.error(400, "At least one of the texts provided was empty.") if texts.any?(&:empty?)
 

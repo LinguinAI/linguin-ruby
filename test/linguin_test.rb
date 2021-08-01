@@ -16,6 +16,7 @@ class LinguinTest < Minitest::Test
     assert_raises(Linguin::AuthenticationError) { Linguin.status }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def test_that_it_forwards_calls_to_default_client
     client = Minitest::Mock.new
     client.expect :detect_language, true, ["test"]
@@ -34,4 +35,5 @@ class LinguinTest < Minitest::Test
     end
     client.verify
   end
+  # rubocop:enable Metrics/AbcSize
 end
