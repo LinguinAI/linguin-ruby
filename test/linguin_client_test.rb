@@ -5,8 +5,10 @@ require "test_helper"
 class LinguinClientTest < Minitest::Test
   def test_that_client_raises_without_api_key
     client = Linguin::Client.new
-    assert_raises(Linguin::AuthenticationError) { client.detect("test") }
-    assert_raises(Linguin::AuthenticationError) { client.detect!("test") }
+    assert_raises(Linguin::AuthenticationError) { client.detect_language("test") }
+    assert_raises(Linguin::AuthenticationError) { client.detect_language!("test") }
+    assert_raises(Linguin::AuthenticationError) { client.detect_profanity("test") }
+    assert_raises(Linguin::AuthenticationError) { client.detect_profanity!("test") }
     assert_raises(Linguin::AuthenticationError) { client.status }
   end
 
