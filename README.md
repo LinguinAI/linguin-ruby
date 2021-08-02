@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/linguin.svg)](https://badge.fury.io/rb/linguin) ![build](https://github.com/LinguinAI/linguin-ruby/actions/workflows/main.yml/badge.svg) [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
 
-This is a Ruby wrapper for the [Linguin AI](https://linguin.ai) API (see [API docs](https://linguin.ai/api-docs/v2)) providing Language Detection as a Service.
+This is a Ruby wrapper for the [Linguin AI](https://linguin.ai) API (see [API docs](https://linguin.ai/api-docs/v2)) providing Language and Profanity Detection as a Service.
 
 Linguin AI is free for up to 100 detections per day. You can get your API key [here](https://linguin.ai).
 
@@ -31,21 +31,25 @@ require "linguin"
 
 Linguin.api_key = "YOUR-API-KEY" # goto https://linguin.ai to get your key
 
-response = Linguin.detect("test")
+response = Linguin.detect_language("test")
 response.success? # => true
 response.results  # => [{ lang: "en", confidence: 0.97 }, ...]
+
+response = Linguin.detect_profanity("you are a moron")
+response.success? # => true
+response.score    # => 0.998
 ```
 
 If something goes wrong (here: empty text):
 
 ```ruby
-response = Linguin.detect("")
+response = Linguin.detect_language("")
 response.success? # => false
 response.error
 # => { code: 400, message: "The language of an empty text is more of a philosophical question." }
 
-# if you prefer to handle exceptions instead you can use `#detect!`:
-response = Linguin.detect!("")
+# if you prefer to handle exceptions instead you can use `#detect_language!`:
+response = Linguin.detect_language!("")
 # => raises Linguin::InputError
 ```
 
@@ -54,19 +58,25 @@ See the list of all exceptions [here](https://github.com/LinguinAI/linguin-ruby/
 ### Bulk detection
 
 To detect the language of multiple texts with one API call, you can pass them as an array. The results will be returned in the same order as the texts.
-All texts have to not be empty. Using `detect!` will result in an exception as for single detections.
+All texts have to not be empty. Using `detect_language!` will result in an exception as for single detections.
+
+The same is true for profanity detection: calling `detect_profanity!` with empty texts will result in an exception as for single detections.
 
 ```ruby
-response = Linguin.detect(["test", "bahnhof", "12341234"])
+response = Linguin.detect_language(["test", "bahnhof", "12341234"])
 response.results
 # => [ [{ lang: "en", confidence: 0.97 }, ...], [{ ... }], [] ]
 
-response = Linguin.detect(["test", ""])
+response = Linguin.detect_profanity(["a test", "you are a moron"])
+response.scores
+# => [0.0124, 0.9981]
+
+response = Linguin.detect_language(["test", ""])
 response.success? # => false
 response.error
 # => { code: 400, message: "At least one of the texts provided was empty." }
 
-Linguin.detect!(["test", ""])
+Linguin.detect_language!(["test", ""])
 # => raises Linguin::InputError
 ```
 
