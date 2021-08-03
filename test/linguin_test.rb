@@ -21,8 +21,8 @@ class LinguinTest < Minitest::Test
     client = Minitest::Mock.new
     client.expect :detect_language, true, ["test"]
     client.expect :detect_language!, true, ["test"]
-    client.expect :detect_profanity, true, ["test", nil]
-    client.expect :detect_profanity!, true, ["test", nil]
+    client.expect :detect_profanity, true, ["test"]
+    client.expect :detect_profanity!, true, ["test"]
     client.expect :status, true
     client.expect :languages, true
     Linguin.stub :default_client, client do

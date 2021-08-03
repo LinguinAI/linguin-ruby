@@ -46,7 +46,7 @@ module Linguin
       detect_language(text).raise_on_error!
     end
 
-    def detect_profanity(text, _lang = nil)
+    def detect_profanity(text)
       ensure_api_key!
 
       return bulk_detect_profanity(text) if text.is_a?(Array)
@@ -59,7 +59,7 @@ module Linguin
       ProfanityDetection.from_httparty(response: httparty_response)
     end
 
-    def detect_profanity!(text, _lang = nil)
+    def detect_profanity!(text)
       detect_profanity(text).raise_on_error!
     end
 
