@@ -4,8 +4,10 @@ require_relative "linguin/version"
 require_relative "linguin/exceptions"
 require_relative "linguin/client"
 require_relative "linguin/base_response"
-require_relative "linguin/detection"
-require_relative "linguin/bulk_detection"
+require_relative "linguin/language_detection"
+require_relative "linguin/profanity_detection"
+require_relative "linguin/bulk_language_detection"
+require_relative "linguin/bulk_profanity_detection"
 require_relative "linguin/status"
 require_relative "linguin/languages"
 
@@ -36,12 +38,20 @@ module Linguin
       default_client.api_key = api_key
     end
 
-    def detect(text)
-      default_client.detect(text)
+    def detect_language(text)
+      default_client.detect_language(text)
     end
 
-    def detect!(text)
-      default_client.detect!(text)
+    def detect_language!(text)
+      default_client.detect_language!(text)
+    end
+
+    def detect_profanity(text)
+      default_client.detect_profanity(text)
+    end
+
+    def detect_profanity!(text)
+      default_client.detect_profanity!(text)
     end
 
     def status

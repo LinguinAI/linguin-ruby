@@ -5,7 +5,7 @@ require "test_helper"
 class LinguinLanguagesTest < Minitest::Test
   def stub_with_json(mock_response)
     json_response = JSON.generate(mock_response)
-    stub_request(:get, "https://api.linguin.ai/v1/languages")
+    stub_request(:get, "https://api.linguin.ai/v2/languages")
       .to_return(
         status: 200,
         body: json_response,

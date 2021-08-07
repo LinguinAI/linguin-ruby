@@ -11,7 +11,7 @@ Layout/LineLength:
 Layout/EmptyLineBetweenDefs:
   AllowAdjacentOneLineDefs: true
 Metrics/MethodLength:
-  Max: 15
+  Max: 16
 Gemspec/DateAssignment: # (new in 1.10)
   Enabled: true
 Layout/SpaceBeforeBrackets: # (new in 1.7)
@@ -79,4 +79,8 @@ Style/InPatternThen: # (new in 1.16)
 Style/MultilineInPatternThen: # (new in 1.16)
   Enabled: true
 Style/QuotedSymbols: # (new in 1.16)
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation: # (new in 1.18)
+  Enabled: true
+Naming/InclusiveLanguage: # (new in 1.18)
   Enabled: true

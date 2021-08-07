@@ -9,7 +9,7 @@ module Linguin
   class Client
     include HTTParty
 
-    base_uri "https://api.linguin.ai/v1"
+    base_uri "https://api.linguin.ai/v2"
 
     # we are parsing the JSON response in Linguin::BaseResponse
     # in order to have symbolized keys
@@ -26,34 +26,41 @@ module Linguin
       configure_api_key(key)
     end
 
-    def detect(text)
+    def detect_language(text)
       ensure_api_key!
 
-      return bulk(text) if text.is_a?(Array)
+      return bulk_detect_language(text) if text.is_a?(Array)
 
       text = sanitize(text)
 
-      return Detection.error(400, "The language of an empty text is more of a philosophical question.") if text.empty?
+      if text.empty?
+        return LanguageDetection.error(400,
+                                       "The language of an empty text is more of a philosophical question.")
+      end
 
-      httparty_response = self.class.post("/detect", headers: headers, body: { q: text })
-      Detection.from_httparty(response: httparty_response)
+      httparty_response = self.class.post("/detect/language", headers: headers, body: { q: text })
+      LanguageDetection.from_httparty(response: httparty_response)
     end
 
-    def detect!(text)
-      detect(text).raise_on_error!
+    def detect_language!(text)
+      detect_language(text).raise_on_error!
     end
 
-    def bulk(texts)
-      texts = texts.map { |text| sanitize(text) }
+    def detect_profanity(text)
+      ensure_api_key!
 
-      return BulkDetection.error(400, "At least one of the texts provided was empty.") if texts.any?(&:empty?)
+      return bulk_detect_profanity(text) if text.is_a?(Array)
 
-      httparty_response = self.class.post("/bulk", headers: headers, body: { q: texts })
-      BulkDetection.from_httparty(response: httparty_response)
+      text = text&.strip
+
+      return ProfanityDetection.error(400, "Can an empty text have profanity in it? I doubt it.") if text.to_s.empty?
+
+      httparty_response = self.class.post("/detect/profanity", headers: headers, body: { q: text })
+      ProfanityDetection.from_httparty(response: httparty_response)
     end
 
-    def bulk!(texts)
-      bulk(texts).raise_on_error!
+    def detect_profanity!(text)
+      detect_profanity(text).raise_on_error!
     end
 
     def status
@@ -68,6 +75,24 @@ module Linguin
     end
 
     private
+
+    def bulk_detect_language(texts)
+      texts = texts.map { |text| sanitize(text) }
+
+      return BulkLanguageDetection.error(400, "At least one of the texts provided was empty.") if texts.any?(&:empty?)
+
+      httparty_response = self.class.post("/bulk_detect/language", headers: headers, body: { q: texts })
+      BulkLanguageDetection.from_httparty(response: httparty_response)
+    end
+
+    def bulk_detect_profanity(texts)
+      texts.map! { |text| text.to_s.strip }
+
+      return BulkProfanityDetection.error(400, "At least one of the texts provided was empty.") if texts.any?(&:empty?)
+
+      httparty_response = self.class.post("/bulk_detect/profanity", headers: headers, body: { q: texts })
+      BulkProfanityDetection.from_httparty(response: httparty_response)
+    end
 
     def configure_api_key(key)
       @api_key = key
